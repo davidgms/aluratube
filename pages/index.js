@@ -30,7 +30,6 @@ const StyledHeader = styled.div`
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        display: block;
     }
     .user-info {
         display: flex;
