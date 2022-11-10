@@ -26,23 +26,34 @@ function HomePage() {
 export default HomePage
 
 const StyledHeader = styled.div`
-    img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-    }
     .user-info {
         display: flex;
         align-items: center;
         width: 100%;
         padding: 16px 32px;
         gap: 16px;
-        margin-top: 50px;
+    }
+    .user-info img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+    }
+    .banner-home {
+        max-height: 400px;
+    }
+    .banner-home img{
+        width: 100%;
+        height: 400px;
+        border-radius: 0;
+        object-fit: cover;
     }
 `;
 function Header() {
     return (
-        <StyledHeader>
+        <StyledHeader style={{marginTop: "56px"}}>
+            <div className="banner-home">
+                <img src={config.banner.src}></img>
+            </div>
             <div className="user-info">
                 <img src={`https://github.com/${config.github}.png`}></img>
                 <div>
@@ -70,7 +81,7 @@ function Timeline(propriedades) {
                             {
                                 videos.map((video => {
                                     return (
-                                        <a href={video.url}>
+                                        <a href={video.url} target="_blank" rel="noopener noreferer">
                                             <img src={video.thumb}></img>
                                             <p>
                                                 {video.title}

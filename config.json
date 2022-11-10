@@ -1,7 +1,11 @@
 {
-    "name": "David Gomes de Carvalgo (Carvalhão)",
+    "name": "David Gomes de Carvalho (Carvalhão)",
     "job": "Front-end Developer Pleno",
     "github": "davidgms",
+    "banner" : {
+      "title" : "night-japan-city",
+      "src" : "https://images.unsplash.com/photo-1511882150382-421056c89033?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+    },
     "playlists": {
       "jogos": [
           {
