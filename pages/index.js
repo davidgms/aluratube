@@ -1,8 +1,10 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
-import Menu from "../src/components/Menu";
+import Menu from "../src/components/Menu/index";
 import { StyledTimeline } from "../src/components/Timeline";
+import { StyledFavorites } from "../src/components/Favorites";
 
 
 function HomePage() {
@@ -11,13 +13,14 @@ function HomePage() {
         flexDirection: "column",
         flex: 1,
     };
+    const [valorDoFiltro, setValorDoFiltro] = React.useState("");
     return (
         <>
             <CSSReset />
             <div style={estilosHome}>
-                <Menu />
+                <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
                 <Header></Header>
-                <Timeline playlists={config.playlists}></Timeline>
+                <Timeline searchValue={valorDoFiltro} playlists={config.playlists} favorites={config.favorites}></Timeline>
             </div>
         </>
     );
@@ -39,11 +42,11 @@ const StyledHeader = styled.div`
         border-radius: 50%;
     }
     .banner-home {
-        max-height: 400px;
+        max-height: 230px;
     }
     .banner-home img{
         width: 100%;
-        height: 400px;
+        height: 230px;
         border-radius: 0;
         object-fit: cover;
     }
@@ -68,32 +71,53 @@ function Header() {
         </StyledHeader>
     )
 }
-function Timeline(propriedades) {
+function Timeline({ searchValue, ...propriedades }) {
     const playlistNames = Object.keys(propriedades.playlists);
+    const favoritesGitHub = propriedades.favorites;
+    
     return (
         <StyledTimeline>
             {playlistNames.map((playlistName) => {
                 const videos = propriedades.playlists[playlistName];
                 return (
-                    <section>
+                    <section key={playlistName}>
                         <h2>{playlistName}</h2>
                         <div>
-                            {
-                                videos.map((video => {
-                                    return (
-                                        <a href={video.url} target="_blank" rel="noopener noreferer">
-                                            <img src={video.thumb}></img>
-                                            <p>
-                                                {video.title}
-                                            </p>
-                                        </a>
-                                    )
-                                }))
-                            }
+                        {videos
+                            .filter((video) => {
+                                const titleNormalized = video.title.toLowerCase();
+                                const searchValueNormalized = searchValue.toLowerCase();
+                                return titleNormalized.includes(searchValueNormalized)
+                            })
+                            .map((video) => {
+                                return (
+                                    <a key={video.url} href={video.url} target="_blank" rel="noopener">
+                                        <img src={video.thumb} />
+                                        <span>
+                                            {video.title}
+                                        </span>
+                                    </a>
+                                )
+                            })}
                         </div>
                     </section>
                 )
             })}
+            <StyledFavorites>
+            <h2>Favoritos</h2>
+            {favoritesGitHub.map((favorite) => {
+                return (
+                    <div>
+                        <a href={`https://github.com/${favorite.github}`} target="_blank" rel="noopener">
+                            <img src={`https://github.com/${favorite.github}.png`}></img>
+                            <p>
+                                @{favorite.github}
+                            </p>
+                        </a>
+                    </div>
+                )
+            })}
+            </StyledFavorites>
         </StyledTimeline>
     )
 }
