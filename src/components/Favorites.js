@@ -17,7 +17,7 @@ export const StyledFavorites = styled.div`
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #000;
+            color: ${({ theme }) => theme.textColorBase};
             font-size: 14px;
             line-height: 16px;
             p {

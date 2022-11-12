@@ -16,8 +16,8 @@ function HomePage() {
     const [valorDoFiltro, setValorDoFiltro] = React.useState("");
     return (
         <>
-            <CSSReset />
             <div style={estilosHome}>
+                {/* Prop Drilling */}
                 <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
                 <Header></Header>
                 <Timeline searchValue={valorDoFiltro} playlists={config.playlists} favorites={config.favorites}></Timeline>
@@ -29,6 +29,7 @@ function HomePage() {
 export default HomePage
 
 const StyledHeader = styled.div`
+    background-color: ${({ theme }) => theme.backgroundLevel1};
     .user-info {
         display: flex;
         align-items: center;
