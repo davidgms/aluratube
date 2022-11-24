@@ -1,10 +1,10 @@
 import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
-import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu/index";
 import { StyledTimeline } from "../src/components/Timeline";
 import { StyledFavorites } from "../src/components/Favorites";
+import { videoService } from "../src/services/videoServices";
 
 
 function HomePage() {
@@ -14,6 +14,24 @@ function HomePage() {
         flex: 1,
     };
     const [valorDoFiltro, setValorDoFiltro] = React.useState("");
+    const service = videoService();
+    const [playlists, setPlaylists] = React.useState({}); //config.playlists
+
+    React.useEffect(() => {
+        console.log("useEffect ativo");
+        service.getAllVideos().then((dados) => {
+            const novasPlaylists = {};
+            dados.data.forEach((video) => {
+              if (!novasPlaylists[video.playlist]) novasPlaylists[video.playlist] = [];
+              novasPlaylists[video.playlist] = [
+                video,
+                ...novasPlaylists[video.playlist],
+              ];
+            });
+            setPlaylists(novasPlaylists);
+          });
+    }, [])
+
     return (
         <>
             <div style={estilosHome}>
@@ -104,11 +122,11 @@ function Timeline({ searchValue, ...propriedades }) {
                     </section>
                 )
             })}
-            <StyledFavorites>
+            <StyledFavorites key="sectionFavoritos">
             <h2>Favoritos</h2>
             {favoritesGitHub.map((favorite) => {
                 return (
-                    <div>
+                    <div key={`favorite-div-${favorite.github}`}>
                         <a href={`https://github.com/${favorite.github}`} target="_blank" rel="noopener">
                             <img src={`https://github.com/${favorite.github}.png`}></img>
                             <p>
