@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const StyledTimeline = styled.div`
   flex: 1;
   width: 100%;
-  padding: 16px;
   overflow: hidden;
   h2 {
     font-size: 16px;
@@ -20,9 +19,9 @@ export const StyledTimeline = styled.div`
   }
   section {
     width: 100%;
-    padding: 0;
     overflow: hidden;
-    padding: 16px;
+    padding: 25px 0;
+    padding-left: 32px;
     div {
       
       width: calc(100vw - 16px * 4);
